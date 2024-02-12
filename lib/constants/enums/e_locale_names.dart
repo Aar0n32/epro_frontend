@@ -1,0 +1,4 @@
+enum ELocaleNames {
+  de,
+  en,
+}
