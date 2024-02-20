@@ -6,7 +6,7 @@ import 'injection.config.dart';
 final locator = GetIt.instance;
 
 @InjectableInit()
-Future<void> Function({String? environment, EnvironmentFilter? environmentFilter}) configureDependencies = ({
+void Function({String? environment, EnvironmentFilter? environmentFilter}) configureDependencies = ({
   String? environment = Environment.prod,
   EnvironmentFilter? environmentFilter,
 }) =>

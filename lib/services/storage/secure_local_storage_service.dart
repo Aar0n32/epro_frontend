@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 
 import 'i_local_storage_service.dart';
 import '../logging/i_logging_service.dart';
+import '../../../model/tokens_dto.dart';
 
 
 @Singleton(as: ILocalStorageService)
@@ -43,8 +44,23 @@ class SecureLocalStorageService implements ILocalStorageService {
       return false;
     });
   }
+
+  @override
+  Future<TokensDto?> loadTokens() async{
+    return await _load(Keys.tokens, TokensDto.fromJson);
+  }
+
+  @override
+  Future<TokensDto> saveTokens(TokensDto tokens) async {
+    return await _save(Keys.tokens, tokens, TokensDto.fromJson);
+  }
+
+  @override
+  Future<bool> clearTokens() async {
+    return await _clear(Keys.tokens);
+  }
 }
 
 abstract class Keys {
-
+  static const tokens = 'tokens';
 }

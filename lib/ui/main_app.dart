@@ -12,6 +12,7 @@ import '../services/auth/i_auth_service.dart';
 import '../services/language/i_language_service.dart';
 import '../services/router/i_router_service.dart';
 import '../services/snackbar/i_snack_bar_service.dart';
+import '../view_models/login/i_login_view_model.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
@@ -49,20 +50,22 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       providers: [
         ChangeNotifierProvider(create: (_) => _snackBarService),
         ChangeNotifierProvider(create: (_) => _routerService),
-        ChangeNotifierProvider(create: (_) => _appStyle),
         ChangeNotifierProvider(create: (_) => locator.get<IAuthService>()),
+        ChangeNotifierProvider(create: (_) => locator.get<ILoginViewModel>()),
+        ChangeNotifierProvider(create: (_) => _appStyle),
       ],
       child: MaterialApp.router(
         scaffoldMessengerKey: _snackBarService.messangerKey,
-        title: 'Example',
+        title: 'OKR',
         localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
+        // theme: ThemeData.from(colorScheme: ColorScheme.fromSwatch()),
         theme: _appStyle.lightThemeData,
-        darkTheme: _appStyle.darkThemeData,
+        // darkTheme: _appStyle.darkThemeData,
         themeMode: ThemeMode.system,
         debugShowCheckedModeBanner: false,
         builder: (BuildContext context, Widget? child) =>

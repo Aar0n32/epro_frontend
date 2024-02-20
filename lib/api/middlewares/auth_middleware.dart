@@ -4,6 +4,8 @@ import 'package:injectable/injectable.dart';
 
 import 'i_middleware.dart';
 import '../request_context.dart';
+import '../../constants/route_names.dart';
+import '../../exceptions/okr_api_exception.dart';
 import '../../services/auth/i_auth_service.dart';
 import '../../services/language/i_language_service.dart';
 import '../../services/logging/i_logging_service.dart';
@@ -24,12 +26,15 @@ class AuthMiddleware implements IMiddleware {
   }
 
   @override
-  Future<Response> execute(
-      {required Future<Response> Function(RequestContext) next,
-      required RequestContext requestContext,}) async {
-    try{
-      _loggingService?.debug('setting header "Authorization = Bearer ${_authService.token}"');
-      requestContext.headerParams['Authorization'] = 'Bearer ${_authService.token}';
+  Future<Response> execute({
+    required Future<Response> Function(RequestContext) next,
+    required RequestContext requestContext,
+  }) async {
+    try {
+      _loggingService?.info(
+          'setting header "Authorization = Bearer ${_authService.token}"');
+      requestContext.headerParams['Authorization'] =
+          'Bearer ${_authService.token}';
       return await next(requestContext);
     } on UnauthenticatedUserException {
       await _handleUnauthanticatedUserException();
@@ -38,8 +43,10 @@ class AuthMiddleware implements IMiddleware {
   }
 
   Future<void> _handleUnauthanticatedUserException() async {
-
+    _authService.logout();
+    _routerService.goNamed(RouteNames.login);
+    _snackBarService
+        .info(_languageService.appLocalizations.autoLogoutNachricht);
+    _loggingService?.info('User logged out automatically');
   }
 }
-
-class UnauthenticatedUserException implements Exception{} // TODO: add own implementation

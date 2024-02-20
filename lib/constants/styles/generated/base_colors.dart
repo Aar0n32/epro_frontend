@@ -299,5 +299,5 @@ class BaseColors {
     static const yellowYellowA400 = Color(0xFFFFEA00);
     static const yellowYellowA700 = Color(0xFFFFD600);
 
-  static const Color primaryAppIconColor = Color(0xFF0E56A4);
+  static const Color primaryAppIconColor = Color(0xFF54c1ea);
 }

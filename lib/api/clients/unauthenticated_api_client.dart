@@ -7,7 +7,7 @@ import '../request_context.dart';
 
 @singleton
 class UnauthenticatedApiClient extends ApiClient {
-  static const _defaultPath = 'http://localhost';
+  static const _defaultPath = 'http://localhost:8080';
   String _basePath = _defaultPath;
 
   final UnauthenticatedMiddlewarePipeline _middlewarePipeline;
