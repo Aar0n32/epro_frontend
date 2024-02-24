@@ -86,6 +86,10 @@ class SnackBarService extends ISnackBarService with ChangeNotifier {
           ),
         ],
       ),
+      margin: const EdgeInsets.only(
+        bottom: 10,
+          left: 10,
+          right: 10),
       behavior: SnackBarBehavior.floating,
     ));
   }

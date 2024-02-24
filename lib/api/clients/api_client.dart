@@ -2,13 +2,16 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart';
+
 import '../../exceptions/api_exception.dart';
+import '../../model/login_dto.dart';
+import '../../model/tokens_dto.dart';
 
 class ApiClient {
   final String basePath;
   final List<String>? authentication;
 
-  ApiClient({this.basePath = 'http://localhost', this.authentication});
+  ApiClient({this.basePath = 'http://localhost:8080', this.authentication});
 
   final _client = Client();
   final _defaultHeaderMap = <String, String>{};
@@ -28,7 +31,7 @@ class ApiClient {
     Map<String, String> formParams,
     String? contentType,
   ) async {
-    if(authentication != null && authentication!.length == 2){
+    if (authentication != null && authentication!.length == 2) {
       headerParams[authentication![0]] = authentication![1];
     }
 
@@ -104,5 +107,81 @@ class ApiClient {
       HttpStatus.badRequest,
       'Invalid HTTP operation: $method $path',
     );
+  }
+
+  Future<String> decodeBodyBytes(Response response) async {
+    final contentType = response.headers['content-type'];
+    return contentType != null &&
+            contentType.toLowerCase().startsWith('application/json')
+        ? response.bodyBytes.isEmpty
+            ? ''
+            : utf8.decode(response.bodyBytes)
+        : response.body;
+  }
+
+  Future<dynamic> deserialize(String value, String targetType,
+          {bool growable = false}) async =>
+      _deserialize(value, targetType, growable);
+
+  dynamic _deserialize(String value, String targetType, bool growable) {
+    return targetType == 'String'
+        ? value
+        : _fromJson(json.decode(value), targetType, growable);
+  }
+
+  dynamic _fromJson(dynamic value, String targetType, bool growable) {
+    try {
+      switch (targetType) {
+        case 'int':
+          return value is int ? value : int.parse('$value');
+        case 'double':
+          return value is double ? value : double.parse('$value');
+        case 'bool':
+          if (value is bool) return value;
+          final valueString = '$value'.toLowerCase();
+          return valueString == 'true' || valueString == '1';
+        case 'DateTime':
+          return value is DateTime ? value : DateTime.tryParse('$value');
+        case 'LoginDto':
+          return LoginDto.fromJson(value);
+        case 'TokensDto':
+          return TokensDto.fromJson(value);
+        default:
+          dynamic match;
+          if (value is List &&
+              (match = RegExp(r'^List<(.*)>$')
+                      .firstMatch(targetType)
+                      ?.group(1)) !=
+                  null) {
+            return value
+                .map<dynamic>((dynamic e) => _fromJson(e, match, growable))
+                .toList(growable: growable);
+          }
+          if (value is Set &&
+              (match = RegExp(r'^Set<(.*)>$')
+                      .firstMatch(targetType)
+                      ?.group(1)) !=
+                  null) {
+            return value
+                .map<dynamic>((dynamic e) => _fromJson(e, match, growable))
+                .toSet();
+          }
+          if (value is Map &&
+              (match = RegExp(r'^Map<String,(.*)>$')
+                      .firstMatch(targetType)
+                      ?.group(1)) !=
+                  null) {
+            return Map<String, dynamic>.fromIterables(
+                value.keys.cast<String>(),
+                value.values.map<dynamic>(
+                    (dynamic e) => _fromJson(e, match, growable)));
+          }
+      }
+    } on Exception catch (error, stackTrace) {
+      throw ApiException.withInner(HttpStatus.internalServerError,
+          'Exception during deserialization', error, stackTrace);
+    }
+    throw ApiException(HttpStatus.internalServerError,
+        'Could not find suitable class for deserialization');
   }
 }

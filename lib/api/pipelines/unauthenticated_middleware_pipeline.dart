@@ -4,6 +4,7 @@ import 'middleware_pipeline.dart';
 import '../middlewares/api_exception_middleware.dart';
 import '../../services/logging/i_logging_service.dart';
 
+@injectable
 class UnauthenticatedMiddlewarePipeline extends MiddlewarePipeline {
   UnauthenticatedMiddlewarePipeline(super.loggingService);
 

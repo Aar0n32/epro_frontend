@@ -1,3 +1,22 @@
 {
-  "@@locale": "de"
+  "@@locale": "de",
+  "@_GENERISCH": {},
+  "abbrechen": "Abbrechen",
+  "schliessen": "Schließen",
+  "speichern": "Speichern",
+  "hinzufuegen": "hinzufügen",
+  "aktualisieren": "Aktualisieren",
+  "loeschen": "Löschen",
+
+  "@_ANMELDEN": {},
+  "anmelden": "Anmelden",
+  "angemeldetBleiben": "Angemeldet bleiben",
+  "autoLogoutNachricht": "Sie wurden automatisch abgemeldet.",
+  "email": "E-Mail",
+  "passwort": "Passwort",
+
+  "@_ERROR": {},
+  "errorStandardNachricht": "Es ist ein Fehler aufgetreten. Bitte versuchen sie es später noch einmal.",
+  "errorLoginNachricht": "E-Mail oder Passwort falsch",
+  "errorServerNachricht": "Server nicht erreichbar"
 }

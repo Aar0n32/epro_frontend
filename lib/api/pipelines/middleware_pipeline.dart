@@ -30,8 +30,8 @@ class MiddlewarePipeline {
   Future<Response> excecute({
     required RequestContext requestContext,
     required Future<Response> Function(RequestContext context) fetchApi}) async {
-    _loggingService?.debug('start executing MiddlewarePipeline...');
-    return _recursive(0, requestContext, fetchApi).whenComplete(() => _loggingService?.debug('end executing MiddlewarePipeline'));
+    _loggingService?.info('start executing MiddlewarePipeline...');
+    return _recursive(0, requestContext, fetchApi).whenComplete(() => _loggingService?.info('end executing MiddlewarePipeline'));
   }
 
   Future<Response> _recursive(int i, RequestContext requestContext, Future<Response> Function(RequestContext) next){
