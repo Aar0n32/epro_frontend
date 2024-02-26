@@ -15,6 +15,17 @@
   "email": "E-Mail",
   "passwort": "Passwort",
 
+  "@_KEY_RESULT_HISTORY": {},
+  "historyTitle": "Neuen Key-Result Wert setzen",
+  "historyAktuellerWert": "Aktueller Wert",
+  "historyZielWert": "Ziel Wert",
+  "historyType": "Fortschritts Typ",
+  "historyTypeNumerisch": "Numerisch",
+  "historyTypeBinary": "Binär",
+  "historyTypeProzent": "Prozentual",
+  "historyNeuerWert": "Neuer Wert",
+  "historyKommentar": "Kommentar",
+
   "@_ERROR": {},
   "errorStandardNachricht": "Es ist ein Fehler aufgetreten. Bitte versuchen sie es später noch einmal.",
   "errorLoginNachricht": "E-Mail oder Passwort falsch",

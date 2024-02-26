@@ -13,6 +13,8 @@ import '../services/language/i_language_service.dart';
 import '../services/router/i_router_service.dart';
 import '../services/snackbar/i_snack_bar_service.dart';
 import '../view_models/login/i_login_view_model.dart';
+import '../view_models/okr_set/i_key_result_history_view_model.dart';
+import '../view_models/okr_set/i_okr_set_view_model.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
@@ -32,8 +34,9 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     AppStyles styles = locator.get();
-    styles.isDarkMode =
-        () => PlatformDispatcher.instance.platformBrightness == Brightness.dark;
+    styles.isDarkMode = () => false;
+    // styles.isDarkMode =
+    //     () => PlatformDispatcher.instance.platformBrightness == Brightness.dark;
     styles.handleOnBrightnessChanged();
     final defaultBrightnessCallback =
         PlatformDispatcher.instance.onPlatformBrightnessChanged;
@@ -52,6 +55,8 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         ChangeNotifierProvider(create: (_) => _routerService),
         ChangeNotifierProvider(create: (_) => locator.get<IAuthService>()),
         ChangeNotifierProvider(create: (_) => locator.get<ILoginViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator.get<IOkrSetViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator.get<IKeyResultHistoryViewModel>()),
         ChangeNotifierProvider(create: (_) => _appStyle),
       ],
       child: MaterialApp.router(

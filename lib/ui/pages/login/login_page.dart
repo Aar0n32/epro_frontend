@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                                     .textTheme
                                     .displayMedium
                                     ?.copyWith(
-                                        color: appStyles.colors.textDefault),
+                                        color: appStyles.colors.textOnColor),
                               ),
                       ),
                     ),
