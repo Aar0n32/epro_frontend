@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart';
 
 import '../../exceptions/api_exception.dart';
+import '../../model/okr_set.dart';
 import '../../model/login_dto.dart';
 import '../../model/tokens_dto.dart';
 
@@ -146,6 +147,8 @@ class ApiClient {
           return LoginDto.fromJson(value);
         case 'TokensDto':
           return TokensDto.fromJson(value);
+        case 'OkrSet':
+          return (value as List).map((e) => OkrSet.fromJson(e)).toList();
         default:
           dynamic match;
           if (value is List &&
