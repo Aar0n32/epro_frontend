@@ -67,7 +67,7 @@ class AuthApi {
       postBody,
       headerParams,
       formParams,
-      contentTypes.isNotEmpty ? null : contentTypes.first,
+      contentTypes.isEmpty ? null : contentTypes.first,
     );
   }
 

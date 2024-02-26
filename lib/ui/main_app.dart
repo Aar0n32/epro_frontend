@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:epro_frontend/view_models/settings/i_settings_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -57,6 +58,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         ChangeNotifierProvider(create: (_) => locator.get<ILoginViewModel>()),
         ChangeNotifierProvider(create: (_) => locator.get<IOkrSetViewModel>()),
         ChangeNotifierProvider(create: (_) => locator.get<IKeyResultHistoryViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator.get<ISettingsViewModel>()),
         ChangeNotifierProvider(create: (_) => _appStyle),
       ],
       child: MaterialApp.router(
