@@ -26,6 +26,12 @@
   "historyNeuerWert": "Neuer Wert",
   "historyKommentar": "Kommentar",
 
+  "@_SETTINGS": {},
+  "einstellungen": "Einstellungen",
+  "einstellungenAbmelden": "Abmelden",
+  "einstellungenUnit": "Unit Verwaltung",
+  "einstellungenNutzer": "NutzerVerwaltung",
+
   "@_ERROR": {},
   "errorStandardNachricht": "Es ist ein Fehler aufgetreten. Bitte versuchen sie es später noch einmal.",
   "errorLoginNachricht": "E-Mail oder Passwort falsch",

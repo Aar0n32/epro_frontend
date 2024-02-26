@@ -1,4 +1,7 @@
+import 'package:epro_frontend/constants/route_names.dart';
+import 'package:epro_frontend/services/router/i_router_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'components/okr_set_item.dart';
 import '../../../constants/asset_image_paths.dart';
@@ -17,19 +20,27 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
+    IRouterService routerService = context.watch();
     int lastUnitId = -1;
     bool showHeader = false;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard'),
-        centerTitle: false,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: Image.asset(AssetImagePaths.okrLogoSmall),
+        title: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Image.asset(AssetImagePaths.okrLogoSmall, height: 56,),
+            ),
+            const Text('Dashboard'),
+          ],
         ),
+        centerTitle: false,
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.settings))
+          IconButton(
+              onPressed: () =>
+                  routerService.goNamed(RouteNames.settings),
+              icon: const Icon(Icons.settings))
         ],
       ),
       floatingActionButton: FloatingActionButton(

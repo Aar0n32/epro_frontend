@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:epro_frontend/ui/pages/settings/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
@@ -18,8 +19,7 @@ class RouterService with ChangeNotifier implements IRouterService {
   RouterService(this._authService);
 
   @factoryMethod
-  static IRouterService create(
-      IAuthService authService) {
+  static IRouterService create(IAuthService authService) {
     IRouterService routerService = RouterService(authService);
     routerService.init();
     return routerService;
@@ -36,8 +36,8 @@ class RouterService with ChangeNotifier implements IRouterService {
       initialLocation: '/',
       redirect: (context, state) {
         const loginLocation = '/${RouteNames.login}';
-        if(!_authService.isAuthenticated){
-          if(state.uri.toString() == loginLocation) return null;
+        if (!_authService.isAuthenticated) {
+          if (state.uri.toString() == loginLocation) return null;
           return _goRouter.namedLocation(
             RouteNames.login,
             pathParameters: state.pathParameters,
@@ -54,12 +54,23 @@ class RouterService with ChangeNotifier implements IRouterService {
             key: state.pageKey,
             child: const DashboardPage(),
           ),
+          routes: [
+            GoRoute(
+              name: RouteNames.settings,
+              path: RouteNames.settings,
+              pageBuilder: (context, state) => MaterialPage(
+                key: state.pageKey,
+                child: const SettingsPage(),
+              ),
+            ),
+          ],
         ),
         GoRoute(
           name: RouteNames.login,
           path: '/${RouteNames.login}',
           redirect: (context, state) {
-            if(_authService.isAuthenticated && state.matchedLocation == '/${RouteNames.login}'){
+            if (_authService.isAuthenticated &&
+                state.matchedLocation == '/${RouteNames.login}') {
               return _goRouter.namedLocation(RouteNames.dashboard);
             }
             return null;

@@ -79,6 +79,7 @@ class AuthService with ChangeNotifier implements IAuthService {
       await _authApi.logout(token!);
       _loggingService.info('logout successful');
     }finally{
+      _tokens = null;
       await _localStorageService.clearTokens();
     }
   }

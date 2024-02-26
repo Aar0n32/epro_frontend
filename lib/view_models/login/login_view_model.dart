@@ -46,6 +46,8 @@ class LoginViewModel extends BaseViewModel with ChangeNotifier implements ILogin
       _loggingService.info('login start...');
       notifyListeners();
       await _authService.login(LoginDto(_email!, _password!), remember);
+      _email = null;
+      _password = null;
       _loadingState = ELoadingState.done;
       _loggingService.info('login succsessful');
       _routerService.goNamed(RouteNames.dashboard);

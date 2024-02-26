@@ -9,23 +9,23 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:device_info_plus/device_info_plus.dart' as _i6;
-import 'package:epro_frontend/api/api_register_module.dart' as _i36;
+import 'package:epro_frontend/api/api_register_module.dart' as _i38;
 import 'package:epro_frontend/api/apis/auth_api.dart' as _i20;
-import 'package:epro_frontend/api/apis/okr_set_api.dart' as _i30;
+import 'package:epro_frontend/api/apis/okr_set_api.dart' as _i32;
 import 'package:epro_frontend/api/clients/authenticated_api_client.dart'
-    as _i29;
+    as _i31;
 import 'package:epro_frontend/api/clients/unauthenticated_api_client.dart'
     as _i19;
 import 'package:epro_frontend/api/middlewares/api_exception_middleware.dart'
     as _i15;
-import 'package:epro_frontend/api/middlewares/auth_middleware.dart' as _i25;
+import 'package:epro_frontend/api/middlewares/auth_middleware.dart' as _i27;
 import 'package:epro_frontend/api/pipelines/authenticated_middleware_pipeline.dart'
-    as _i26;
+    as _i28;
 import 'package:epro_frontend/api/pipelines/middleware_pipeline.dart' as _i13;
 import 'package:epro_frontend/api/pipelines/unauthenticated_middleware_pipeline.dart'
     as _i18;
 import 'package:epro_frontend/configs/app_styles.dart' as _i4;
-import 'package:epro_frontend/configs/global_register_module.dart' as _i35;
+import 'package:epro_frontend/configs/global_register_module.dart' as _i37;
 import 'package:epro_frontend/services/auth/auth_service.dart' as _i22;
 import 'package:epro_frontend/services/auth/i_auth_service.dart' as _i21;
 import 'package:epro_frontend/services/language/i_language_service.dart' as _i7;
@@ -34,8 +34,8 @@ import 'package:epro_frontend/services/logging/appenders/developer_log_appender.
     as _i3;
 import 'package:epro_frontend/services/logging/i_logging_service.dart' as _i9;
 import 'package:epro_frontend/services/logging/logging_service.dart' as _i10;
-import 'package:epro_frontend/services/okr_set/i_okr_set_service.dart' as _i31;
-import 'package:epro_frontend/services/okr_set/okr_set_service.dart' as _i32;
+import 'package:epro_frontend/services/okr_set/i_okr_set_service.dart' as _i33;
+import 'package:epro_frontend/services/okr_set/okr_set_service.dart' as _i34;
 import 'package:epro_frontend/services/router/i_router_service.dart' as _i23;
 import 'package:epro_frontend/services/router/router_service.dart' as _i24;
 import 'package:epro_frontend/services/snackbar/i_snack_bar_service.dart'
@@ -46,12 +46,16 @@ import 'package:epro_frontend/services/storage/i_local_storage_service.dart'
 import 'package:epro_frontend/services/storage/secure_local_storage_service.dart'
     as _i17;
 import 'package:epro_frontend/view_models/login/i_login_view_model.dart'
-    as _i27;
-import 'package:epro_frontend/view_models/login/login_view_model.dart' as _i28;
+    as _i29;
+import 'package:epro_frontend/view_models/login/login_view_model.dart' as _i30;
 import 'package:epro_frontend/view_models/okr_set/i_key_result_history_view_model.dart'
-    as _i33;
+    as _i35;
 import 'package:epro_frontend/view_models/okr_set/key_result_history_view_model.dart'
-    as _i34;
+    as _i36;
+import 'package:epro_frontend/view_models/settings/i_settings_view_model.dart'
+    as _i25;
+import 'package:epro_frontend/view_models/settings/settings_view_model.dart'
+    as _i26;
 import 'package:flutter/services.dart' as _i5;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i14;
 import 'package:get_it/get_it.dart' as _i1;
@@ -123,40 +127,45 @@ extension GetItInjectableX on _i1.GetIt {
     );
     gh.singleton<_i23.IRouterService>(
         _i24.RouterService.create(gh<_i21.IAuthService>()));
-    gh.singleton<_i25.AuthMiddleware>(_i25.AuthMiddleware(
+    gh.singleton<_i25.ISettingsViewModel>(_i26.SettingsViewModel(
+      gh<_i9.ILoggingService>(),
+      gh<_i23.IRouterService>(),
+      gh<_i21.IAuthService>(),
+    ));
+    gh.singleton<_i27.AuthMiddleware>(_i27.AuthMiddleware(
       gh<_i21.IAuthService>(),
       gh<_i23.IRouterService>(),
       gh<_i11.ISnackBarService>(),
       gh<_i7.ILanguageService>(),
       gh<_i9.ILoggingService>(),
     ));
-    gh.factory<_i26.AuthenticatedMiddlewarePipeline>(
-        () => _i26.AuthenticatedMiddlewarePipeline.create(
+    gh.factory<_i28.AuthenticatedMiddlewarePipeline>(
+        () => _i28.AuthenticatedMiddlewarePipeline.create(
               gh<_i9.ILoggingService>(),
               gh<_i15.ApiExceptionMiddleware>(),
-              gh<_i25.AuthMiddleware>(),
+              gh<_i27.AuthMiddleware>(),
             ));
-    gh.singleton<_i27.ILoginViewModel>(_i28.LoginViewModel(
+    gh.singleton<_i29.ILoginViewModel>(_i30.LoginViewModel(
       gh<_i21.IAuthService>(),
       gh<_i23.IRouterService>(),
       gh<_i7.ILanguageService>(),
       gh<_i11.ISnackBarService>(),
       gh<_i9.ILoggingService>(),
     ));
-    gh.singleton<_i29.AuthenticatedApiClient>(_i29.AuthenticatedApiClient(
-        gh<_i26.AuthenticatedMiddlewarePipeline>()));
-    gh.singleton<_i30.OkrSetAPi>(
-        apiRegisterModule.okrSetAPi(gh<_i29.AuthenticatedApiClient>()));
-    gh.singleton<_i31.IOkrSetService>(_i32.OkrSetService(gh<_i30.OkrSetAPi>()));
-    gh.singleton<_i33.IKeyResultHistoryViewModel>(
-        _i34.KeyResultHistoryViewModel(
+    gh.singleton<_i31.AuthenticatedApiClient>(_i31.AuthenticatedApiClient(
+        gh<_i28.AuthenticatedMiddlewarePipeline>()));
+    gh.singleton<_i32.OkrSetAPi>(
+        apiRegisterModule.okrSetAPi(gh<_i31.AuthenticatedApiClient>()));
+    gh.singleton<_i33.IOkrSetService>(_i34.OkrSetService(gh<_i32.OkrSetAPi>()));
+    gh.singleton<_i35.IKeyResultHistoryViewModel>(
+        _i36.KeyResultHistoryViewModel(
       gh<_i9.ILoggingService>(),
-      gh<_i31.IOkrSetService>(),
+      gh<_i33.IOkrSetService>(),
     ));
     return this;
   }
 }
 
-class _$GlobalRegisterModule extends _i35.GlobalRegisterModule {}
+class _$GlobalRegisterModule extends _i37.GlobalRegisterModule {}
 
-class _$ApiRegisterModule extends _i36.ApiRegisterModule {}
+class _$ApiRegisterModule extends _i38.ApiRegisterModule {}
