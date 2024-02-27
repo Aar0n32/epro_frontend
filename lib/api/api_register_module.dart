@@ -1,3 +1,4 @@
+import 'package:epro_frontend/api/apis/unit_api.dart';
 import 'package:injectable/injectable.dart';
 
 import 'apis/auth_api.dart';
@@ -12,4 +13,7 @@ abstract class ApiRegisterModule {
 
   @singleton
   OkrSetAPi okrSetAPi(AuthenticatedApiClient apiClient) => OkrSetAPi(apiClient);
+
+  @singleton
+  UnitApi unitApi(AuthenticatedApiClient apiClient) => UnitApi(apiClient);
 }

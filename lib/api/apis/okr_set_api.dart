@@ -11,7 +11,7 @@ class OkrSetAPi {
   OkrSetAPi(this.apiClient);
 
   Future<Response> _getAllOkrSetsWithHttpInfo() async {
-    const path = '/okrSet';
+    const path = '/api/okrSet';
 
     Object? postBody;
 
