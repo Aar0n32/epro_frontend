@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/logging/appenders/developer_log_appender.dart';
 
@@ -10,11 +11,9 @@ const defaultEnvironments = [Environment.prod, Environment.dev];
 
 @module
 abstract class GlobalRegisterModule {
-  @singleton
-  WebOptions webOptions() => const WebOptions();
-
+  @preResolve
   @Singleton(env: defaultEnvironments)
-  FlutterSecureStorage secureStorage(WebOptions webOptions) => FlutterSecureStorage(webOptions: webOptions);
+  Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
 
   @Singleton(order: -1)
   DeveloperLogAppender get developerLogAppender {

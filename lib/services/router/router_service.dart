@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:epro_frontend/ui/pages/settings/settings_page.dart';
+import 'package:epro_frontend/ui/pages/units/units_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
@@ -62,6 +63,16 @@ class RouterService with ChangeNotifier implements IRouterService {
                 key: state.pageKey,
                 child: const SettingsPage(),
               ),
+              routes: [
+                GoRoute(
+                  name: RouteNames.units,
+                  path: RouteNames.units,
+                  pageBuilder: (context, state) => MaterialPage(
+                    key: state.pageKey,
+                    child: const UnitsPage(),
+                  ),
+                ),
+              ]
             ),
           ],
         ),

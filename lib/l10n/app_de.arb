@@ -4,9 +4,11 @@
   "abbrechen": "Abbrechen",
   "schliessen": "Schließen",
   "speichern": "Speichern",
-  "hinzufuegen": "hinzufügen",
+  "hinzufuegen": "Hinzufügen",
   "aktualisieren": "Aktualisieren",
   "loeschen": "Löschen",
+  "rename": "Umbenennen",
+  "name": "Name",
 
   "@_ANMELDEN": {},
   "anmelden": "Anmelden",
@@ -32,8 +34,16 @@
   "einstellungenUnit": "Unit Verwaltung",
   "einstellungenNutzer": "NutzerVerwaltung",
 
+  "@_UNITS": {},
+  "unitsTitle": "Unit Verwaltung",
+  "unitsDialogTitle": "Neue Unit hinzufügen",
+  "addUnit": "Unit hinzufügen",
+
   "@_ERROR": {},
+  "error": "Fehler",
   "errorStandardNachricht": "Es ist ein Fehler aufgetreten. Bitte versuchen sie es später noch einmal.",
-  "errorLoginNachricht": "E-Mail oder Passwort falsch",
-  "errorServerNachricht": "Server nicht erreichbar"
+  "errorLoginNachricht": "Die eingegebene E-Mail oder das Passwort ist falsch.",
+  "errorServerNachricht": "Der Server ist momentan nicht erreichbar.Bitte versuchen sie es später noch einmal.",
+  "errorUnauthorized": "Sie sind nicht angemeldet.",
+  "errorForbiddenAction": "Sie haben nicht die Rechte um diese Aktion auszuführen."
 }

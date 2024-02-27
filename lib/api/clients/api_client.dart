@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:epro_frontend/model/unit.dart';
 import 'package:http/http.dart';
 
 import '../../exceptions/api_exception.dart';
@@ -149,6 +150,8 @@ class ApiClient {
           return TokensDto.fromJson(value);
         case 'OkrSet':
           return (value as List).map((e) => OkrSet.fromJson(e)).toList();
+        case 'Unit':
+          return (value as List).map((e) => Unit.fromJson(e)).toList();
         default:
           dynamic match;
           if (value is List &&

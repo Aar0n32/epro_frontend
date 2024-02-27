@@ -1,3 +1,5 @@
+import 'package:epro_frontend/constants/route_names.dart';
+import 'package:epro_frontend/services/router/i_router_service.dart';
 import 'package:epro_frontend/util/extensions/context_lang_extension.dart';
 import 'package:epro_frontend/view_models/settings/i_settings_view_model.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final lang = context.lang();
+    final IRouterService routerService = context.watch();
     final ISettingsViewModel settingsViewModel = context.watch();
 
     return Scaffold(
@@ -42,7 +45,7 @@ class SettingsPage extends StatelessWidget {
               const Divider(),
               ListTile(
                 title: Text(lang.einstellungenUnit),
-                onTap: () {},
+                onTap: () => routerService.goNamed(RouteNames.units),
               ),
               const Divider(),
               ListTile(
