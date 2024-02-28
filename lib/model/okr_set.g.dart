@@ -14,6 +14,10 @@ OkrSet _$OkrSetFromJson(Map<String, dynamic> json) => OkrSet(
       (json['belongsToKeyResults'] as List<dynamic>)
           .map((e) => KeyResult.fromJson(e as Map<String, dynamic>))
           .toList(),
+      json['paysIntoKeyResults'] == null
+          ? null
+          : KeyResult.fromJson(
+              json['paysIntoKeyResults'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$OkrSetToJson(OkrSet instance) => <String, dynamic>{
@@ -22,6 +26,7 @@ Map<String, dynamic> _$OkrSetToJson(OkrSet instance) => <String, dynamic>{
       'progressPercentage': instance.progressPercentage,
       'objective': instance.objective,
       'belongsToKeyResults': instance.belongsToKeyResults,
+      'paysIntoKeyResults': instance.paysIntoKeyResults,
     };
 
 OkrSetUnit _$OkrSetUnitFromJson(Map<String, dynamic> json) => OkrSetUnit(

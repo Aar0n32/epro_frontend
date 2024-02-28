@@ -30,6 +30,8 @@ class UnitViewModel extends BaseViewModel
 
   ELoadingState _loadingStateCreate = ELoadingState.initial;
 
+  ELoadingState _loadingStateMove = ELoadingState.initial;
+
   List<Unit> _units = [];
 
   @override
@@ -37,6 +39,9 @@ class UnitViewModel extends BaseViewModel
 
   @override
   ELoadingState get loadingStateCreate => _loadingStateCreate;
+
+  @override
+  ELoadingState get loadingStateMove => _loadingStateMove;
 
   @override
   String? nameValidator(String? value) =>
@@ -98,5 +103,44 @@ class UnitViewModel extends BaseViewModel
       _snackBarService.errorFromCode(ErrorCodes.unknownError);
     }
     notifyListeners();
+  }
+
+  @override
+  Future<void> move(int unitId, int parentId) async{
+    try{
+      _loadingStateMove = ELoadingState.loading;
+      _loggingService.info('moving unit');
+      notifyListeners();
+      _unitService.moveUnit(parentId, unitId);
+      _loadingStateMove = ELoadingState.done;
+      _loggingService.info('moving unit successfully');
+    } on OkrApiException catch (error, stackTrace) {
+      _loggingService.error('error while moving unit', error, stackTrace);
+      _loadingStateMove = ELoadingState.error;
+      _snackBarService.errorFromCode(error.errorCode);
+    } on TimeoutException catch (error, stackTrace) {
+      _loggingService.error('error while moving unit', error, stackTrace);
+      _loadingStateMove = ELoadingState.error;
+      _snackBarService.errorFromCode(ErrorCodes.requestTimeout);
+    } catch (error, stackTrace) {
+      _loggingService.error('error while moving unit', error, stackTrace);
+      _loadingStateMove = ELoadingState.error;
+      _snackBarService.errorFromCode(ErrorCodes.unknownError);
+    }
+    notifyListeners();
+  }
+
+  @override
+  String? unitParent(Unit parent, Unit unit) {
+    if(parent.parentId == unit.id) return 'Eine Unit kann kein Kind von sich selbst sein';
+    if(_checkParent(unit.id, parent.id)) return 'Units dürfen nicht im Loop aufeinander verweisen';
+    return null;
+  }
+
+  bool _checkParent(int notAllowedId, int parentId){
+    var nextUnit = _units.firstWhere((element) => element.id == parentId);
+    if(nextUnit.parentId == null) return false;
+    if(nextUnit.parentId == notAllowedId) return true;
+    return _checkParent(notAllowedId, nextUnit.parentId!);
   }
 }

@@ -78,4 +78,34 @@ class UnitApi {
           response.statusCode, await apiClient.decodeBodyBytes(response));
     }
   }
+
+  Future<Response> _moveUnitWithHttpInfo(Map<String, dynamic> json, int id) async {
+    final path = '/api/units/$id/changeParent';
+
+    Object? postBody = json;
+
+    final queryParams = <String>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = ['application/json'];
+
+    return apiClient.invokeAPI(
+      path,
+      'PATCH',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  Future<void> moveUnit(int parentId, int unitId) async {
+    final response = await _moveUnitWithHttpInfo({"newParentUnitId": parentId}, unitId);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(
+          response.statusCode, await apiClient.decodeBodyBytes(response));
+    }
+  }
 }

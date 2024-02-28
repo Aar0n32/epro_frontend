@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:epro_frontend/view_models/okr_set/i_okr_set_detail_view_model.dart';
 import 'package:epro_frontend/view_models/settings/i_settings_view_model.dart';
 import 'package:epro_frontend/view_models/unit/i_unit_view_model.dart';
 import 'package:epro_frontend/view_models/user/i_user_view_model.dart';
@@ -60,6 +61,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         ChangeNotifierProvider(create: (_) => locator.get<ILoginViewModel>()),
         ChangeNotifierProvider(create: (_) => locator.get<IUserViewModel>()),
         ChangeNotifierProvider(create: (_) => locator.get<IOkrSetViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator.get<IOkrSetDetailViewModel>()),
         ChangeNotifierProvider(create: (_) => locator.get<IKeyResultHistoryViewModel>()),
         ChangeNotifierProvider(create: (_) => locator.get<ISettingsViewModel>()),
         ChangeNotifierProvider(create: (_) => locator.get<IUnitViewModel>()),

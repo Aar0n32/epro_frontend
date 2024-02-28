@@ -1,7 +1,9 @@
 import 'package:epro_frontend/constants/enums/e_role.dart';
+import 'package:epro_frontend/constants/enums/e_unit_type.dart';
 import 'package:epro_frontend/model/unit.dart';
 import 'package:epro_frontend/model/user.dart';
 import 'package:epro_frontend/ui/pages/units/components/unit_dialog.dart';
+import 'package:epro_frontend/ui/pages/units/components/unit_new_parent_dialog.dart';
 import 'package:epro_frontend/util/extensions/context_lang_extension.dart';
 import 'package:epro_frontend/view_models/unit/i_unit_view_model.dart';
 import 'package:epro_frontend/view_models/user/i_user_view_model.dart';
@@ -56,7 +58,11 @@ class _UnitItemState extends State<UnitItem> {
         trailing: _canEdit ? PopupMenuButton(
           onSelected: (value) {
             switch (value) {
-              case EUnitMenu.delete:
+              case EUnitMenu.move:
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) => UnitNewParentDialog(widget.unit));
                 break;
               case EUnitMenu.rename:
                 break;
@@ -69,14 +75,14 @@ class _UnitItemState extends State<UnitItem> {
             }
           },
           itemBuilder: (BuildContext context) => [
-            PopupMenuItem(
-              value: EUnitMenu.delete,
-              child: Text(lang.loeschen),
+            if(widget.unit.type != EUnitType.company) const PopupMenuItem(
+              value: EUnitMenu.move,
+              child: Text('Umhängen'),
             ),
-            PopupMenuItem(
-              value: EUnitMenu.rename,
-              child: Text(lang.rename),
-            ),
+            // PopupMenuItem(
+            //   value: EUnitMenu.rename,
+            //   child: Text(lang.rename),
+            // ),
             PopupMenuItem(
               value: EUnitMenu.add,
               child: Text(lang.addUnit),
@@ -94,4 +100,4 @@ class _UnitItemState extends State<UnitItem> {
   }
 }
 
-enum EUnitMenu { delete, rename, add }
+enum EUnitMenu { move, rename, add }

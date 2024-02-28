@@ -32,20 +32,20 @@ class OkrSetViewModel extends BaseViewModel
 
   @override
   Future<void> load() async {
-    try{
+    try {
       _loadingState = ELoadingState.loading;
       _loggingService.info('loading okr sets');
       notifyListeners();
       _okrSets = await _okrSetService.getAllOkrSets();
       _loadingState = ELoadingState.done;
       _loggingService.info('loading okr sets successful');
-    }on OkrApiException catch (error, stackTrace){
+    } on OkrApiException catch (error, stackTrace) {
       _loggingService.error('error while loading okr sets', error, stackTrace);
       _loadingState = ELoadingState.error;
-    } on TimeoutException catch (error, stackTrace){
+    } on TimeoutException catch (error, stackTrace) {
       _loggingService.error('error while loading okr sets', error, stackTrace);
       _loadingState = ELoadingState.error;
-    } catch (error, stackTrace){
+    } catch (error, stackTrace) {
       _loggingService.error('error while loading okr sets', error, stackTrace);
       _loadingState = ELoadingState.error;
     }

@@ -8,6 +8,8 @@ abstract class IUnitViewModel implements ChangeNotifier {
 
   ELoadingState get loadingStateCreate;
 
+  ELoadingState get loadingStateMove;
+
   String? nameValidator(String? value);
 
   Unit get companyUnit;
@@ -16,7 +18,11 @@ abstract class IUnitViewModel implements ChangeNotifier {
 
   List<Unit> getChildUnits(int id);
 
+  String? unitParent(Unit parent, Unit unit);
+
   Future<void> load();
 
   Future<void> createUnit(UnitCreateDto unit);
+
+  Future<void> move(int unitId, int parentId);
 }

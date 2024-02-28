@@ -20,4 +20,9 @@ class UnitService with ChangeNotifier implements IUnitService {
   Future<void> createUnit(UnitCreateDto unit) async {
     await _unitApi.createUnit(unit);
   }
+
+  @override
+  Future<void> moveUnit(int parent, int unit) async {
+    await _unitApi.moveUnit(parent, unit);
+  }
 }

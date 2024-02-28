@@ -15,15 +15,30 @@ class OkrSet extends Equatable {
   final double progressPercentage;
   final OkrSetObjective objective;
   final List<KeyResult> belongsToKeyResults;
+  final KeyResult? paysIntoKeyResults;
 
-  const OkrSet(this.id, this.unit, this.progressPercentage, this.objective, this.belongsToKeyResults);
+  const OkrSet(
+    this.id,
+    this.unit,
+    this.progressPercentage,
+    this.objective,
+    this.belongsToKeyResults,
+    this.paysIntoKeyResults,
+  );
 
   factory OkrSet.fromJson(Map<String, dynamic> json) => _$OkrSetFromJson(json);
 
   Map<String, dynamic> toJson() => _$OkrSetToJson(this);
 
   @override
-  List<Object?> get props => [id, unit, progressPercentage, objective, belongsToKeyResults];
+  List<Object?> get props => [
+        id,
+        unit,
+        progressPercentage,
+        objective,
+        belongsToKeyResults,
+        paysIntoKeyResults,
+      ];
 }
 
 @JsonSerializable()

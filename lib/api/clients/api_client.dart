@@ -51,6 +51,7 @@ class ApiClient {
       final msgBody = body == null ? '' : json.encode(body);
       final nullableHeaderParams = headerParams.isEmpty ? null : headerParams;
 
+      print(msgBody);
       switch (method) {
         case 'POST':
           return await _client.post(url,
@@ -149,8 +150,10 @@ class ApiClient {
           return LoginDto.fromJson(value);
         case 'TokensDto':
           return TokensDto.fromJson(value);
-        case 'OkrSet':
+        case 'OkrSets':
           return (value as List).map((e) => OkrSet.fromJson(e)).toList();
+        case 'OkrSet':
+          return OkrSet.fromJson(value);
         case 'Unit':
           return (value as List).map((e) => Unit.fromJson(e)).toList();
         case 'Users':

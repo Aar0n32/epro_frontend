@@ -1,0 +1,10 @@
+services:
+  frontend:
+      image: frontend_local
+      build:
+        context: .
+        dockerfile: build/web/Dockerfile
+      hostname: Frontend
+      restart: on-failure
+      ports:
+        - 80:80

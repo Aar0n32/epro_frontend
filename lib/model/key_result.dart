@@ -1,4 +1,3 @@
-import 'package:epro_frontend/util/json_converter/okr_set_id_json_converter.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -21,9 +20,8 @@ class KeyResult extends Equatable {
   final EProgressType type;
   @JsonKey(name: 'belongsToOkrSet')
   final int okrSetId;
-  // @OkrSetIdJsonConverter()
-  // final int paysIntoOkrSet;
-  final List<KeyResultHistory>? keyResultHistoryEntry;
+  final List<int> okrSetsThatPayIntoThisKeyResult;
+  final List<KeyResultHistory>? keyResultHistory;
 
   const KeyResult(
     this.id,
@@ -35,7 +33,8 @@ class KeyResult extends Equatable {
     this.confidenceLevel,
     this.type,
     this.okrSetId,
-    this.keyResultHistoryEntry,
+    this.okrSetsThatPayIntoThisKeyResult,
+    this.keyResultHistory,
   );
 
   factory KeyResult.fromJson(Map<String, dynamic> json) =>
@@ -54,6 +53,7 @@ class KeyResult extends Equatable {
         confidenceLevel,
         type,
         okrSetId,
-        keyResultHistoryEntry,
+        okrSetsThatPayIntoThisKeyResult,
+        keyResultHistory,
       ];
 }

@@ -16,6 +16,8 @@ class TextInputField extends StatelessWidget {
   final TextInputType? keyboardType;
   final int? minLines;
   final void Function(String)? onFieldSubmitted;
+  final String? counterText;
+  final bool? noPadding;
 
   const TextInputField({
     super.key,
@@ -34,6 +36,8 @@ class TextInputField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.minLines = 1,
     this.onFieldSubmitted,
+    this.counterText,
+    this.noPadding = false,
   });
 
   bool get isRequired =>
@@ -42,7 +46,7 @@ class TextInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: noPadding == true ? EdgeInsets.zero : const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
         style: Theme.of(context).textTheme.titleMedium,
         minLines: minLines,
@@ -57,7 +61,7 @@ class TextInputField extends StatelessWidget {
         initialValue: value,
         decoration: decoration ??
             InputDecoration(
-              counterText: ' ',
+              counterText: counterText,
               border: isEditingModeDisabled
                   ? InputBorder.none
                   : const OutlineInputBorder(),
@@ -73,7 +77,6 @@ class TextInputField extends StatelessWidget {
         validator: validator,
         onChanged: onChanged,
         onFieldSubmitted: onFieldSubmitted,
-
       ),
     );
   }

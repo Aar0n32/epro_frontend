@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'key_result_history_dialog.dart';
-import '../../../shared/progress_bar.dart';
+import '../../../shared/progress_bar_tile.dart';
 import '../../../../model/key_result.dart';
 
 class KeyResultItem extends StatelessWidget {
@@ -20,7 +20,7 @@ class KeyResultItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: ProgressBar(
+      title: ProgressBarTile(
         title: keyResult.name,
         value: keyResult.progressPercentage,
       ),

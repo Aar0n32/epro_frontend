@@ -6,4 +6,6 @@ abstract class IUnitService implements ChangeNotifier{
   Future<List<Unit>> getAllUnits();
 
   Future<void> createUnit(UnitCreateDto unit);
+
+  Future<void> moveUnit(int parent, int unit);
 }

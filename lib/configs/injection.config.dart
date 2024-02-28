@@ -9,7 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:device_info_plus/device_info_plus.dart' as _i6;
-import 'package:epro_frontend/api/api_register_module.dart' as _i50;
+import 'package:epro_frontend/api/api_register_module.dart' as _i52;
 import 'package:epro_frontend/api/apis/auth_api.dart' as _i20;
 import 'package:epro_frontend/api/apis/okr_set_api.dart' as _i32;
 import 'package:epro_frontend/api/apis/unit_api.dart' as _i33;
@@ -27,7 +27,7 @@ import 'package:epro_frontend/api/pipelines/middleware_pipeline.dart' as _i13;
 import 'package:epro_frontend/api/pipelines/unauthenticated_middleware_pipeline.dart'
     as _i18;
 import 'package:epro_frontend/configs/app_styles.dart' as _i4;
-import 'package:epro_frontend/configs/global_register_module.dart' as _i49;
+import 'package:epro_frontend/configs/global_register_module.dart' as _i51;
 import 'package:epro_frontend/services/auth/auth_service.dart' as _i22;
 import 'package:epro_frontend/services/auth/i_auth_service.dart' as _i21;
 import 'package:epro_frontend/services/language/i_language_service.dart' as _i7;
@@ -56,10 +56,14 @@ import 'package:epro_frontend/view_models/login/i_login_view_model.dart'
 import 'package:epro_frontend/view_models/login/login_view_model.dart' as _i30;
 import 'package:epro_frontend/view_models/okr_set/i_key_result_history_view_model.dart'
     as _i47;
+import 'package:epro_frontend/view_models/okr_set/i_okr_set_detail_view_model.dart'
+    as _i49;
 import 'package:epro_frontend/view_models/okr_set/i_okr_set_view_model.dart'
     as _i37;
 import 'package:epro_frontend/view_models/okr_set/key_result_history_view_model.dart'
     as _i48;
+import 'package:epro_frontend/view_models/okr_set/okr_set_detail_view_model.dart'
+    as _i50;
 import 'package:epro_frontend/view_models/okr_set/okr_set_view_model.dart'
     as _i38;
 import 'package:epro_frontend/view_models/settings/i_settings_view_model.dart'
@@ -201,10 +205,14 @@ extension GetItInjectableX on _i1.GetIt {
       gh<_i7.ILanguageService>(),
       gh<_i35.IOkrSetService>(),
     ));
+    gh.singleton<_i49.IOkrSetDetailViewModel>(_i50.OkrSetDetailViewModel(
+      gh<_i9.ILoggingService>(),
+      gh<_i35.IOkrSetService>(),
+    ));
     return this;
   }
 }
 
-class _$GlobalRegisterModule extends _i49.GlobalRegisterModule {}
+class _$GlobalRegisterModule extends _i51.GlobalRegisterModule {}
 
-class _$ApiRegisterModule extends _i50.ApiRegisterModule {}
+class _$ApiRegisterModule extends _i52.ApiRegisterModule {}

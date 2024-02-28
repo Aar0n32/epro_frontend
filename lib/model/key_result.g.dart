@@ -16,7 +16,10 @@ KeyResult _$KeyResultFromJson(Map<String, dynamic> json) => KeyResult(
       json['confidenceLevel'] as int,
       const ProgressTypeJsonConverter().fromJson(json['type'] as String),
       json['belongsToOkrSet'] as int,
-      (json['keyResultHistoryEntry'] as List<dynamic>?)
+      (json['okrSetsThatPayIntoThisKeyResult'] as List<dynamic>)
+          .map((e) => e as int)
+          .toList(),
+      (json['keyResultHistory'] as List<dynamic>?)
           ?.map((e) => KeyResultHistory.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
@@ -31,5 +34,7 @@ Map<String, dynamic> _$KeyResultToJson(KeyResult instance) => <String, dynamic>{
       'confidenceLevel': instance.confidenceLevel,
       'type': const ProgressTypeJsonConverter().toJson(instance.type),
       'belongsToOkrSet': instance.okrSetId,
-      'keyResultHistoryEntry': instance.keyResultHistoryEntry,
+      'okrSetsThatPayIntoThisKeyResult':
+          instance.okrSetsThatPayIntoThisKeyResult,
+      'keyResultHistory': instance.keyResultHistory,
     };

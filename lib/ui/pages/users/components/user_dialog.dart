@@ -19,7 +19,7 @@ class UserDialog extends StatefulWidget {
 }
 
 class _UserDialogState extends State<UserDialog> {
-  final _fromKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   bool _obscureText = true;
 
   @override
@@ -39,7 +39,7 @@ class _UserDialogState extends State<UserDialog> {
           content: SizedBox(
             width: 500,
             child: Form(
-              key: _fromKey,
+              key: _formKey,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -148,8 +148,8 @@ class _UserDialogState extends State<UserDialog> {
                 child: Text(lang.abbrechen)),
             TextButton(
               onPressed: () async {
-                if (_fromKey.currentState != null &&
-                    _fromKey.currentState!.validate()) {
+                if (_formKey.currentState != null &&
+                    _formKey.currentState!.validate()) {
                   await userViewModel.createUser();
                   if (userViewModel.loadingStateAdd != ELoadingState.error) {
                     if (!context.mounted) return;

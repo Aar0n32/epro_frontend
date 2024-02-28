@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:epro_frontend/constants/enums/e_okr_set_detail_mode.dart';
+import 'package:epro_frontend/ui/pages/okr_detail/generic_okr_detail_page.dart';
 import 'package:epro_frontend/ui/pages/settings/settings_page.dart';
 import 'package:epro_frontend/ui/pages/units/units_page.dart';
 import 'package:epro_frontend/ui/pages/users/users_page.dart';
@@ -58,31 +60,54 @@ class RouterService with ChangeNotifier implements IRouterService {
           ),
           routes: [
             GoRoute(
-              name: RouteNames.settings,
-              path: RouteNames.settings,
+              name: RouteNames.detail,
+              path: '${RouteNames.detail}/:id',
               pageBuilder: (context, state) => MaterialPage(
                 key: state.pageKey,
-                child: const SettingsPage(),
+                child: GenericOkrDetailPage(
+                  state.pathParameters['id']!,
+                  state.extra as EOkrSetDetailMode,
+                ),
               ),
               routes: [
                 GoRoute(
-                  name: RouteNames.units,
-                  path: RouteNames.units,
+                  name: RouteNames.edit,
+                  path: RouteNames.edit,
                   pageBuilder: (context, state) => MaterialPage(
                     key: state.pageKey,
-                    child: const UnitsPage(),
+                    child: GenericOkrDetailPage(
+                      state.pathParameters['id']!,
+                      state.extra as EOkrSetDetailMode,
+                    ),
                   ),
                 ),
-                GoRoute(
-                  name: RouteNames.users,
-                  path: RouteNames.users,
-                  pageBuilder: (context, state) => MaterialPage(
-                    key: state.pageKey,
-                    child: const UsersPage(),
-                  ),
-                ),
-              ]
+              ],
             ),
+            GoRoute(
+                name: RouteNames.settings,
+                path: RouteNames.settings,
+                pageBuilder: (context, state) => MaterialPage(
+                      key: state.pageKey,
+                      child: const SettingsPage(),
+                    ),
+                routes: [
+                  GoRoute(
+                    name: RouteNames.units,
+                    path: RouteNames.units,
+                    pageBuilder: (context, state) => MaterialPage(
+                      key: state.pageKey,
+                      child: const UnitsPage(),
+                    ),
+                  ),
+                  GoRoute(
+                    name: RouteNames.users,
+                    path: RouteNames.users,
+                    pageBuilder: (context, state) => MaterialPage(
+                      key: state.pageKey,
+                      child: const UsersPage(),
+                    ),
+                  ),
+                ]),
           ],
         ),
         GoRoute(
