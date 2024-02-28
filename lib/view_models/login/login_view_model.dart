@@ -32,7 +32,7 @@ class LoginViewModel extends BaseViewModel with ChangeNotifier implements ILogin
   String? _password;
 
   @override
-  bool remember = false;
+  bool remember = true;
 
   ELoadingState _loadingState = ELoadingState.initial;
 

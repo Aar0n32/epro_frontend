@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../shared/TextInputField.dart';
+import '../../../shared/text_input_field.dart';
 import '../../../../constants/enums/e_loading_state.dart';
 import '../../../../model/key_result.dart';
 import '../../../../util/extensions/app_localizations_extension.dart';

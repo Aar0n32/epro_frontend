@@ -1,8 +1,10 @@
 import 'package:epro_frontend/constants/enums/e_loading_state.dart';
+import 'package:epro_frontend/ui/pages/settings/components/user_settings_item.dart';
 import 'package:epro_frontend/ui/pages/units/components/unit_item.dart';
 import 'package:epro_frontend/ui/shared/error_card.dart';
 import 'package:epro_frontend/util/extensions/context_lang_extension.dart';
 import 'package:epro_frontend/view_models/unit/i_unit_view_model.dart';
+import 'package:epro_frontend/view_models/user/i_user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +23,8 @@ class _UnitsPageState extends State<UnitsPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await context.read<IUnitViewModel>().load();
+      if(!context.mounted) return;
+      await context.read<IUserViewModel>().loadMe();
     });
   }
 
@@ -56,6 +60,7 @@ class _UnitsPageState extends State<UnitsPage> {
           ],
         ),
         centerTitle: false,
+        actions: const [UserSettingsItem()],
       ),
       body: SafeArea(
         child: Padding(

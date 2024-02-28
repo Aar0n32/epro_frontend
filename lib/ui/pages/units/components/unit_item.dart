@@ -1,7 +1,10 @@
+import 'package:epro_frontend/constants/enums/e_role.dart';
 import 'package:epro_frontend/model/unit.dart';
+import 'package:epro_frontend/model/user.dart';
 import 'package:epro_frontend/ui/pages/units/components/unit_dialog.dart';
 import 'package:epro_frontend/util/extensions/context_lang_extension.dart';
 import 'package:epro_frontend/view_models/unit/i_unit_view_model.dart';
+import 'package:epro_frontend/view_models/user/i_user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +19,15 @@ class UnitItem extends StatefulWidget {
 
 class _UnitItemState extends State<UnitItem> {
   bool _expanded = true;
+
+  bool get _canEdit{
+    final User? user = context.watch<IUserViewModel>().me;
+    if(user?.role == ERole.coOkrAdmin) return true;
+    if(user?.role == ERole.buoOkrAdmin){
+      return user?.canEditUnit == widget.unit.id;
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +53,7 @@ class _UnitItemState extends State<UnitItem> {
         collapsedTextColor: Theme.of(context).colorScheme.onSurface,
         iconColor: Theme.of(context).colorScheme.onSurface,
         textColor: Theme.of(context).colorScheme.onSurface,
-        trailing: PopupMenuButton(
+        trailing: _canEdit ? PopupMenuButton(
           onSelected: (value) {
             switch (value) {
               case EUnitMenu.delete:
@@ -70,10 +82,10 @@ class _UnitItemState extends State<UnitItem> {
               child: Text(lang.addUnit),
             ),
           ],
-        ),
+        ) : null,
         children: children
             .map((unit) => Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
+                  padding: const EdgeInsets.only(left: 16.0),
                   child: UnitItem(unit),
                 ))
             .toList(),

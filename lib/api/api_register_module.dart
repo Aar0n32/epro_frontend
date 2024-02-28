@@ -1,4 +1,5 @@
 import 'package:epro_frontend/api/apis/unit_api.dart';
+import 'package:epro_frontend/api/apis/user_api.dart';
 import 'package:injectable/injectable.dart';
 
 import 'apis/auth_api.dart';
@@ -16,4 +17,7 @@ abstract class ApiRegisterModule {
 
   @singleton
   UnitApi unitApi(AuthenticatedApiClient apiClient) => UnitApi(apiClient);
+
+  @singleton
+  UserApi userApi(AuthenticatedApiClient apiClient) => UserApi(apiClient);
 }

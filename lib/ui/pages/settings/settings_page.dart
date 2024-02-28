@@ -1,20 +1,33 @@
 import 'package:epro_frontend/constants/route_names.dart';
 import 'package:epro_frontend/services/router/i_router_service.dart';
+import 'package:epro_frontend/ui/pages/settings/components/user_settings_item.dart';
 import 'package:epro_frontend/util/extensions/context_lang_extension.dart';
-import 'package:epro_frontend/view_models/settings/i_settings_view_model.dart';
+import 'package:epro_frontend/view_models/user/i_user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants/asset_image_paths.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await context.read<IUserViewModel>().loadMe();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final lang = context.lang();
     final IRouterService routerService = context.watch();
-    final ISettingsViewModel settingsViewModel = context.watch();
 
     return Scaffold(
       appBar: AppBar(
@@ -31,6 +44,7 @@ class SettingsPage extends StatelessWidget {
           ],
         ),
         centerTitle: false,
+        actions: const [UserSettingsItem(onSettingsPage: true)],
       ),
       body: SafeArea(
         child: Padding(
@@ -38,19 +52,13 @@ class SettingsPage extends StatelessWidget {
           child: Column(
             children: [
               ListTile(
-                title: Text(lang.einstellungenAbmelden),
-                trailing: const Icon(Icons.logout),
-                onTap: settingsViewModel.logout,
-              ),
-              const Divider(),
-              ListTile(
                 title: Text(lang.einstellungenUnit),
                 onTap: () => routerService.goNamed(RouteNames.units),
               ),
               const Divider(),
               ListTile(
                 title: Text(lang.einstellungenNutzer),
-                onTap: () {},
+                onTap: () => routerService.goNamed(RouteNames.users),
               ),
             ],
           ),

@@ -1,4 +1,5 @@
 import 'package:epro_frontend/constants/enums/e_error_codes.dart';
+import 'package:epro_frontend/constants/enums/e_role.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../constants/enums/e_progress_type.dart';
@@ -29,6 +30,17 @@ extension AppLocalizationsExtension on AppLocalizations {
       case ErrorCodes.badRequest:
       case ErrorCodes.unknownError:
         return errorStandardNachricht;
+    }
+  }
+
+  String textFromRole(ERole role){
+    switch(role){
+      case ERole.coOkrAdmin:
+        return roleCoAdmin;
+      case ERole.buoOkrAdmin:
+        return roleBuAdmin;
+      case ERole.readOnlyUser:
+        return roleUser;
     }
   }
 }

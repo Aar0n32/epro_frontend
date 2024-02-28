@@ -1,5 +1,5 @@
-import 'package:epro_frontend/constants/route_names.dart';
-import 'package:epro_frontend/services/router/i_router_service.dart';
+import 'package:epro_frontend/ui/pages/settings/components/user_settings_item.dart';
+import 'package:epro_frontend/view_models/user/i_user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,8 +19,15 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashboardPage> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_)  async{
+      await context.read<IUserViewModel>().loadMe();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    IRouterService routerService = context.watch();
     int lastUnitId = -1;
     bool showHeader = false;
 
@@ -36,12 +43,7 @@ class _DashboardPageState extends State<DashboardPage> {
           ],
         ),
         centerTitle: false,
-        actions: [
-          IconButton(
-              onPressed: () =>
-                  routerService.goNamed(RouteNames.settings),
-              icon: const Icon(Icons.settings))
-        ],
+        actions: const [UserSettingsItem()],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
