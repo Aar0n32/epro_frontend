@@ -51,8 +51,6 @@ class ApiClient {
       final msgBody = body == null ? '' : json.encode(body);
       final nullableHeaderParams = headerParams.isEmpty ? null : headerParams;
 
-      print(msgBody);
-      print(nullableHeaderParams);
       switch (method) {
         case 'POST':
           return await _client.post(url,

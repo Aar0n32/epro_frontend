@@ -1,5 +1,11 @@
 import 'dart:async';
 
+import 'package:epro_frontend/constants/enums/e_error_codes.dart';
+import 'package:epro_frontend/constants/enums/e_progress_type.dart';
+import 'package:epro_frontend/model/key_result.dart';
+import 'package:epro_frontend/model/update_key_result.dart';
+import 'package:epro_frontend/services/language/i_language_service.dart';
+import 'package:epro_frontend/services/snackbar/i_snack_bar_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:injectable/injectable.dart';
@@ -16,10 +22,16 @@ class KeyResultHistoryViewModel extends BaseViewModel
     with ChangeNotifier
     implements IKeyResultHistoryViewModel {
   final ILoggingService _loggingService;
+  final ISnackBarService _snackBarService;
+  final ILanguageService _languageService;
   final IOkrSetService _okrSetService;
 
-  KeyResultHistoryViewModel(this._loggingService, this._okrSetService)
-      : super(_loggingService);
+  KeyResultHistoryViewModel(
+    this._loggingService,
+    this._snackBarService,
+    this._languageService,
+    this._okrSetService,
+  ) : super(_loggingService);
 
   ELoadingState _loadingState = ELoadingState.initial;
 
@@ -27,12 +39,23 @@ class KeyResultHistoryViewModel extends BaseViewModel
   ELoadingState get loadingState => _loadingState;
 
   @override
-  String? newValueValidator(String? value) {
-    // TODO: Test, max number depending on type
-    if (value == null || value.isEmpty) return 'Feld nötig';
+  String? newValueValidator(String? value, KeyResult keyResult) {
+    if (value == null || value.isEmpty) {
+      return _languageService.appLocalizations.validationRequired;
+    }
     var num = double.tryParse(value);
-    if (num == null) return 'Keine Nummer';
-    if (num < 0) return 'Positive Nummer';
+    if (num == null || num < 0) {
+      return _languageService.appLocalizations.validNumber;
+    }
+    if (num == keyResult.currentProgress) {
+      return _languageService.appLocalizations.validOldValue;
+    }
+    if (num > keyResult.targetProgress) {
+      return _languageService.appLocalizations.validTarget;
+    }
+    if (keyResult.type == EProgressType.binary && num != 0 && num != 1) {
+      return _languageService.appLocalizations.validBinary;
+    }
     return null;
   }
 
@@ -42,29 +65,31 @@ class KeyResultHistoryViewModel extends BaseViewModel
 
   @override
   Future<void> addKeyResultHistory(
-    int keyResultId,
-    double value,
-    String comment,
+    UpdateKeyResult updateKeyResult,
+    int okrSetId,
   ) async {
     try {
       _loadingState = ELoadingState.loading;
       _loggingService.info('adding key result history');
       notifyListeners();
-      // await _okrSetService.add TODO: add method
+      await _okrSetService.updateKeyResult(updateKeyResult, okrSetId);
       _loadingState = ELoadingState.done;
       _loggingService.info('adding key result history successful');
     } on OkrApiException catch (error, stackTrace) {
       _loggingService.error(
           'error while adding key result history', error, stackTrace);
       _loadingState = ELoadingState.error;
+      _snackBarService.errorFromCode(error.errorCode);
     } on TimeoutException catch (error, stackTrace) {
       _loggingService.error(
           'error while adding key result history', error, stackTrace);
       _loadingState = ELoadingState.error;
+      _snackBarService.errorFromCode(ErrorCodes.requestTimeout);
     } catch (error, stackTrace) {
       _loggingService.error(
           'error while adding key result history', error, stackTrace);
       _loadingState = ELoadingState.error;
+      _snackBarService.errorFromCode(ErrorCodes.unknownError);
     }
     notifyListeners();
   }

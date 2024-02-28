@@ -20,6 +20,9 @@
   "email": "E-Mail",
   "passwort": "Passwort",
 
+  "@_DASHBOARD": {},
+  "dashboard": "Dashboard",
+
   "@_KEY_RESULT_HISTORY": {},
   "historyTitle": "Neuen Key-Result Wert setzen",
   "historyAktuellerWert": "Aktueller Wert",
@@ -61,5 +64,14 @@
   "errorLoginNachricht": "Die eingegebene E-Mail oder das Passwort ist falsch.",
   "errorServerNachricht": "Der Server ist momentan nicht erreichbar.Bitte versuchen sie es später noch einmal.",
   "errorUnauthorized": "Sie sind nicht angemeldet.",
-  "errorForbiddenAction": "Sie haben nicht die Rechte um diese Aktion auszuführen."
+  "errorForbiddenAction": "Sie haben nicht die Rechte um diese Aktion auszuführen.",
+
+  "@_VALIDATION": {},
+  "validationRequired": "Dieses Feld ist erforderlich",
+  "validNumber": "Es muss eine postivie Zahl eingegeben werden",
+  "validOldValue": "Es darf nciht der bisherige Wert eingegeben werden",
+  "validTarget": "Der Wert darf nicht größer als der Ziel Wert sein",
+  "validBinary": "Bei diesem Fortschritts Typen sind nur die Eingaben 0 und 1 zulässig",
+  "validNoUnit": "Einem Bu-Admin muss eine Unit zugewiesen werden bei der er Admin ist",
+  "validNoAdmin": "Nur Bu-Admins kann eine Unit zugewiesen werden"
 }

@@ -42,10 +42,13 @@ class OkrSetItem extends StatelessWidget {
           ),
         Card(
           child: ExpansionTile(
-            title: ProgressBar(title: okrSet.objective.name),
+            title: ProgressBar(
+              title: okrSet.objective.name,
+              value: okrSet.progressPercentage,
+            ),
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   children: children,
                 ),

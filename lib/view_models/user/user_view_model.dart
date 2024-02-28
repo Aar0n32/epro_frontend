@@ -7,6 +7,7 @@ import 'package:epro_frontend/exceptions/okr_api_exception.dart';
 import 'package:epro_frontend/model/unit.dart';
 import 'package:epro_frontend/model/user.dart';
 import 'package:epro_frontend/model/user_create_dto.dart';
+import 'package:epro_frontend/services/language/i_language_service.dart';
 import 'package:epro_frontend/services/logging/i_logging_service.dart';
 import 'package:epro_frontend/services/snackbar/i_snack_bar_service.dart';
 import 'package:epro_frontend/services/user/i_user_service.dart';
@@ -22,10 +23,15 @@ class UserViewModel extends BaseViewModel
     implements IUserViewModel {
   final ILoggingService _loggingService;
   final ISnackBarService _snackBarService;
+  final ILanguageService _languageService;
   final IUserService _userService;
 
-  UserViewModel(this._loggingService, this._snackBarService, this._userService)
-      : super(_loggingService);
+  UserViewModel(
+    this._loggingService,
+    this._snackBarService,
+    this._languageService,
+    this._userService,
+  ) : super(_loggingService);
 
   ELoadingState _loadingState = ELoadingState.initial;
 
@@ -127,10 +133,10 @@ class UserViewModel extends BaseViewModel
   @override
   String? unitValidator(Unit? unit) {
     if (_dialogRole == ERole.buoOkrAdmin && unit == null) {
-      return 'Bu-Admins muss eine Unit zugewiesen werden';
+      return _languageService.appLocalizations.validNoUnit;
     }
     if (_dialogRole != ERole.buoOkrAdmin && unit != null) {
-      return 'Nur Bu-Admins kann eine Unit zugewieden werden';
+      return _languageService.appLocalizations.validNoAdmin;
     }
     return null;
   }

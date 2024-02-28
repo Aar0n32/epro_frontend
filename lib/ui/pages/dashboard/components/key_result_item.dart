@@ -20,7 +20,10 @@ class KeyResultItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: ProgressBar(title: keyResult.name),
+      title: ProgressBar(
+        title: keyResult.name,
+        value: keyResult.progressPercentage,
+      ),
       trailing: IconButton(
         onPressed: () => _changeKeyResultValue(context),
         icon: const Icon(Icons.add),

@@ -7,8 +7,9 @@ part of 'okr_set.dart';
 // **************************************************************************
 
 OkrSet _$OkrSetFromJson(Map<String, dynamic> json) => OkrSet(
-      json['id'] as int,
+      json['okrSetId'] as int,
       OkrSetUnit.fromJson(json['unit'] as Map<String, dynamic>),
+      (json['progressPercentage'] as num).toDouble(),
       OkrSetObjective.fromJson(json['objective'] as Map<String, dynamic>),
       (json['belongsToKeyResults'] as List<dynamic>)
           .map((e) => KeyResult.fromJson(e as Map<String, dynamic>))
@@ -16,8 +17,9 @@ OkrSet _$OkrSetFromJson(Map<String, dynamic> json) => OkrSet(
     );
 
 Map<String, dynamic> _$OkrSetToJson(OkrSet instance) => <String, dynamic>{
-      'id': instance.id,
+      'okrSetId': instance.id,
       'unit': instance.unit,
+      'progressPercentage': instance.progressPercentage,
       'objective': instance.objective,
       'belongsToKeyResults': instance.belongsToKeyResults,
     };
@@ -37,14 +39,14 @@ Map<String, dynamic> _$OkrSetUnitToJson(OkrSetUnit instance) =>
 
 OkrSetObjective _$OkrSetObjectiveFromJson(Map<String, dynamic> json) =>
     OkrSetObjective(
-      json['id'] as int,
+      json['objectiveId'] as int,
       json['name'] as String,
       json['description'] as String,
     );
 
 Map<String, dynamic> _$OkrSetObjectiveToJson(OkrSetObjective instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'objectiveId': instance.id,
       'name': instance.name,
       'description': instance.description,
     };

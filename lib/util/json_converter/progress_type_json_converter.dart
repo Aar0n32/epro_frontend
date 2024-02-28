@@ -7,9 +7,10 @@ class ProgressTypeJsonConverter
   const ProgressTypeJsonConverter();
 
   @override
-  EProgressType fromJson(String json) =>EProgressType.values
-        .firstWhere((element) => element.toString() == json.toLowerCase());
-
+  EProgressType fromJson(String json) {
+    return EProgressType.values
+        .firstWhere((element) => element.name == json.toLowerCase());
+  }
 
   @override
   String toJson(EProgressType type) => type.name.toUpperCase();

@@ -8,7 +8,9 @@ import 'package:epro_frontend/services/okr_set/i_okr_set_service.dart';
 import 'package:epro_frontend/view_models/base_view_model.dart';
 import 'package:epro_frontend/view_models/okr_set/i_okr_set_view_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:injectable/injectable.dart';
 
+@Singleton(as: IOkrSetViewModel)
 class OkrSetViewModel extends BaseViewModel
     with ChangeNotifier
     implements IOkrSetViewModel {
@@ -17,7 +19,6 @@ class OkrSetViewModel extends BaseViewModel
 
   OkrSetViewModel(this._loggingService, this._okrSetService)
       : super(_loggingService);
-
 
   ELoadingState _loadingState = ELoadingState.initial;
 

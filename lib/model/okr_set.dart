@@ -9,19 +9,21 @@ part 'okr_set.g.dart';
 
 @JsonSerializable()
 class OkrSet extends Equatable {
+  @JsonKey(name: 'okrSetId')
   final int id;
   final OkrSetUnit unit;
+  final double progressPercentage;
   final OkrSetObjective objective;
   final List<KeyResult> belongsToKeyResults;
 
-  const OkrSet(this.id, this.unit, this.objective, this.belongsToKeyResults);
+  const OkrSet(this.id, this.unit, this.progressPercentage, this.objective, this.belongsToKeyResults);
 
   factory OkrSet.fromJson(Map<String, dynamic> json) => _$OkrSetFromJson(json);
 
   Map<String, dynamic> toJson() => _$OkrSetToJson(this);
 
   @override
-  List<Object?> get props => [id, unit, objective, belongsToKeyResults];
+  List<Object?> get props => [id, unit, progressPercentage, objective, belongsToKeyResults];
 }
 
 @JsonSerializable()
@@ -44,6 +46,7 @@ class OkrSetUnit extends Equatable {
 
 @JsonSerializable()
 class OkrSetObjective extends Equatable {
+  @JsonKey(name: 'objectiveId')
   final int id;
   final String name;
   final String description;

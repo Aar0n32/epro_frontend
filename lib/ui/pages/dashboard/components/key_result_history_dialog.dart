@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:epro_frontend/model/update_key_result.dart';
+import 'package:epro_frontend/view_models/okr_set/i_okr_set_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,17 +27,22 @@ class _KeyResultHistoryDialogState extends State<KeyResultHistoryDialog> {
   String? _comment;
 
   Future<void> _addKeyResultHistory() async {
-    final IKeyResultHistoryViewModel keyResultHistoryViewModel =
-        context.read();
+    final IKeyResultHistoryViewModel keyResultHistoryViewModel = context.read();
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
       await keyResultHistoryViewModel.addKeyResultHistory(
-        widget.keyResult.id,
-        double.parse(_newValue!),
-        _comment!,
+        UpdateKeyResult(
+          widget.keyResult.id,
+          double.parse(_newValue!),
+          _comment!,
+          widget.keyResult.type,
+        ),
+        widget.keyResult.okrSetId,
       );
       if (keyResultHistoryViewModel.loadingState != ELoadingState.error) {
         if (!context.mounted) return;
-        // Navigator.of(context).pop();
+        unawaited(context.read<IOkrSetViewModel>().load());
+        if (!context.mounted) return;
+        Navigator.of(context).pop();
       }
     }
   }
@@ -78,11 +87,12 @@ class _KeyResultHistoryDialogState extends State<KeyResultHistoryDialog> {
                       ),
                     ),
                     Flexible(
-                      flex: 2,
+                      flex: 4,
                       child: TextInputField(
                         label: lang.historyNeuerWert,
                         onChanged: (value) => _newValue = value,
-                        validator: keyResultHistoryViewModel.newValueValidator,
+                        validator: (value) => keyResultHistoryViewModel
+                            .newValueValidator(value, widget.keyResult),
                       ),
                     ),
                   ],
