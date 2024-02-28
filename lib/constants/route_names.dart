@@ -3,4 +3,5 @@ abstract class RouteNames {
   static const login = 'login';
   static const settings = 'settings';
   static const units = 'units';
+  static const users = 'users';
 }

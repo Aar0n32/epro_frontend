@@ -57,6 +57,7 @@ class TextInputField extends StatelessWidget {
         initialValue: value,
         decoration: decoration ??
             InputDecoration(
+              counterText: ' ',
               border: isEditingModeDisabled
                   ? InputBorder.none
                   : const OutlineInputBorder(),
@@ -72,6 +73,7 @@ class TextInputField extends StatelessWidget {
         validator: validator,
         onChanged: onChanged,
         onFieldSubmitted: onFieldSubmitted,
+
       ),
     );
   }

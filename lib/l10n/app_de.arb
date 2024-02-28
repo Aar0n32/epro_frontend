@@ -9,6 +9,9 @@
   "loeschen": "Löschen",
   "rename": "Umbenennen",
   "name": "Name",
+  "vorname": "Vorname",
+  "nachname": "Nachname",
+  "abmelden": "Abmelden",
 
   "@_ANMELDEN": {},
   "anmelden": "Anmelden",
@@ -28,16 +31,29 @@
   "historyNeuerWert": "Neuer Wert",
   "historyKommentar": "Kommentar",
 
+  "@_ROLE": {},
+  "role": "Rolle",
+  "roleCoAdmin": "Co-Admin",
+  "roleBuAdmin": "Bu-Admin",
+  "roleUser": "User",
+
   "@_SETTINGS": {},
   "einstellungen": "Einstellungen",
-  "einstellungenAbmelden": "Abmelden",
   "einstellungenUnit": "Unit Verwaltung",
   "einstellungenNutzer": "NutzerVerwaltung",
 
   "@_UNITS": {},
+  "unit": "Unit",
   "unitsTitle": "Unit Verwaltung",
   "unitsDialogTitle": "Neue Unit hinzufügen",
   "addUnit": "Unit hinzufügen",
+
+  "@_USERS": {},
+  "usersTitle": "User Verwaltung",
+  "usersCreateTitle": "Neuen User erstellen",
+  "usersChangeRole": "Rolle ändern",
+  "usersNewUnit": "Neuer Unit zuweisen",
+  "usersNoUnit": "Keine Unit",
 
   "@_ERROR": {},
   "error": "Fehler",
