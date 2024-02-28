@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:epro_frontend/model/unit.dart';
+import 'package:epro_frontend/model/user.dart';
 import 'package:http/http.dart';
 
 import '../../exceptions/api_exception.dart';
+import '../../model/okr_set.dart';
 import '../../model/login_dto.dart';
 import '../../model/tokens_dto.dart';
 
@@ -48,6 +51,7 @@ class ApiClient {
       final msgBody = body == null ? '' : json.encode(body);
       final nullableHeaderParams = headerParams.isEmpty ? null : headerParams;
 
+      print(msgBody);
       switch (method) {
         case 'POST':
           return await _client.post(url,
@@ -146,6 +150,16 @@ class ApiClient {
           return LoginDto.fromJson(value);
         case 'TokensDto':
           return TokensDto.fromJson(value);
+        case 'OkrSets':
+          return (value as List).map((e) => OkrSet.fromJson(e)).toList();
+        case 'OkrSet':
+          return OkrSet.fromJson(value);
+        case 'Unit':
+          return (value as List).map((e) => Unit.fromJson(e)).toList();
+        case 'Users':
+          return (value as List).map((e) => User.fromJson(e)).toList();
+        case 'User':
+          return User.fromJson(value);
         default:
           dynamic match;
           if (value is List &&

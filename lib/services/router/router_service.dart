@@ -1,5 +1,10 @@
 import 'dart:async';
 
+import 'package:epro_frontend/constants/enums/e_okr_set_detail_mode.dart';
+import 'package:epro_frontend/ui/pages/okr_detail/generic_okr_detail_page.dart';
+import 'package:epro_frontend/ui/pages/settings/settings_page.dart';
+import 'package:epro_frontend/ui/pages/units/units_page.dart';
+import 'package:epro_frontend/ui/pages/users/users_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
@@ -18,8 +23,7 @@ class RouterService with ChangeNotifier implements IRouterService {
   RouterService(this._authService);
 
   @factoryMethod
-  static IRouterService create(
-      IAuthService authService) {
+  static IRouterService create(IAuthService authService) {
     IRouterService routerService = RouterService(authService);
     routerService.init();
     return routerService;
@@ -36,8 +40,8 @@ class RouterService with ChangeNotifier implements IRouterService {
       initialLocation: '/',
       redirect: (context, state) {
         const loginLocation = '/${RouteNames.login}';
-        if(!_authService.isAuthenticated){
-          if(state.uri.toString() == loginLocation) return null;
+        if (!_authService.isAuthenticated) {
+          if (state.uri.toString() == loginLocation) return null;
           return _goRouter.namedLocation(
             RouteNames.login,
             pathParameters: state.pathParameters,
@@ -54,12 +58,64 @@ class RouterService with ChangeNotifier implements IRouterService {
             key: state.pageKey,
             child: const DashboardPage(),
           ),
+          routes: [
+            GoRoute(
+              name: RouteNames.detail,
+              path: '${RouteNames.detail}/:id',
+              pageBuilder: (context, state) => MaterialPage(
+                key: state.pageKey,
+                child: GenericOkrDetailPage(
+                  state.pathParameters['id']!,
+                  state.extra as EOkrSetDetailMode,
+                ),
+              ),
+              routes: [
+                GoRoute(
+                  name: RouteNames.edit,
+                  path: RouteNames.edit,
+                  pageBuilder: (context, state) => MaterialPage(
+                    key: state.pageKey,
+                    child: GenericOkrDetailPage(
+                      state.pathParameters['id']!,
+                      state.extra as EOkrSetDetailMode,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            GoRoute(
+                name: RouteNames.settings,
+                path: RouteNames.settings,
+                pageBuilder: (context, state) => MaterialPage(
+                      key: state.pageKey,
+                      child: const SettingsPage(),
+                    ),
+                routes: [
+                  GoRoute(
+                    name: RouteNames.units,
+                    path: RouteNames.units,
+                    pageBuilder: (context, state) => MaterialPage(
+                      key: state.pageKey,
+                      child: const UnitsPage(),
+                    ),
+                  ),
+                  GoRoute(
+                    name: RouteNames.users,
+                    path: RouteNames.users,
+                    pageBuilder: (context, state) => MaterialPage(
+                      key: state.pageKey,
+                      child: const UsersPage(),
+                    ),
+                  ),
+                ]),
+          ],
         ),
         GoRoute(
           name: RouteNames.login,
           path: '/${RouteNames.login}',
           redirect: (context, state) {
-            if(_authService.isAuthenticated && state.matchedLocation == '/${RouteNames.login}'){
+            if (_authService.isAuthenticated &&
+                state.matchedLocation == '/${RouteNames.login}') {
               return _goRouter.namedLocation(RouteNames.dashboard);
             }
             return null;

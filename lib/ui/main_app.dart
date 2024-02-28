@@ -1,5 +1,9 @@
 import 'dart:ui';
 
+import 'package:epro_frontend/view_models/okr_set/i_okr_set_detail_view_model.dart';
+import 'package:epro_frontend/view_models/settings/i_settings_view_model.dart';
+import 'package:epro_frontend/view_models/unit/i_unit_view_model.dart';
+import 'package:epro_frontend/view_models/user/i_user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -13,6 +17,8 @@ import '../services/language/i_language_service.dart';
 import '../services/router/i_router_service.dart';
 import '../services/snackbar/i_snack_bar_service.dart';
 import '../view_models/login/i_login_view_model.dart';
+import '../view_models/okr_set/i_key_result_history_view_model.dart';
+import '../view_models/okr_set/i_okr_set_view_model.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
@@ -32,8 +38,9 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     AppStyles styles = locator.get();
-    styles.isDarkMode =
-        () => PlatformDispatcher.instance.platformBrightness == Brightness.dark;
+    styles.isDarkMode = () => false;
+    // styles.isDarkMode =
+    //     () => PlatformDispatcher.instance.platformBrightness == Brightness.dark;
     styles.handleOnBrightnessChanged();
     final defaultBrightnessCallback =
         PlatformDispatcher.instance.onPlatformBrightnessChanged;
@@ -52,6 +59,12 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         ChangeNotifierProvider(create: (_) => _routerService),
         ChangeNotifierProvider(create: (_) => locator.get<IAuthService>()),
         ChangeNotifierProvider(create: (_) => locator.get<ILoginViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator.get<IUserViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator.get<IOkrSetViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator.get<IOkrSetDetailViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator.get<IKeyResultHistoryViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator.get<ISettingsViewModel>()),
+        ChangeNotifierProvider(create: (_) => locator.get<IUnitViewModel>()),
         ChangeNotifierProvider(create: (_) => _appStyle),
       ],
       child: MaterialApp.router(

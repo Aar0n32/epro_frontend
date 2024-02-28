@@ -9,7 +9,7 @@ import '../base_view_model.dart';
 import '../../constants/enums/e_error_codes.dart';
 import '../../constants/enums/e_loading_state.dart';
 import '../../constants/route_names.dart';
-import '../../exceptions/base_exception.dart';
+import '../../exceptions/okr_api_exception.dart';
 import '../../model/login_dto.dart';
 import '../../services/auth/i_auth_service.dart';
 import '../../services/language/i_language_service.dart';
@@ -32,7 +32,7 @@ class LoginViewModel extends BaseViewModel with ChangeNotifier implements ILogin
   String? _password;
 
   @override
-  bool remember = false;
+  bool remember = true;
 
   ELoadingState _loadingState = ELoadingState.initial;
 
@@ -46,10 +46,12 @@ class LoginViewModel extends BaseViewModel with ChangeNotifier implements ILogin
       _loggingService.info('login start...');
       notifyListeners();
       await _authService.login(LoginDto(_email!, _password!), remember);
+      _email = null;
+      _password = null;
       _loadingState = ELoadingState.done;
       _loggingService.info('login succsessful');
       _routerService.goNamed(RouteNames.dashboard);
-    } on BaseException catch (error, stackTrace){
+    } on OkrApiException catch (error, stackTrace){
       _loggingService.error('error while login', error, stackTrace);
       _loadingState = ELoadingState.error;
       _handleLoginError(error.errorCode);

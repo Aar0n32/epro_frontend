@@ -21,8 +21,12 @@ class $WebAssetsGen {
   /// File path: web/assets/okr_logo.png
   AssetGenImage get okrLogo => const AssetGenImage('web/assets/okr_logo.png');
 
+  /// File path: web/assets/okr_logo_small.png
+  AssetGenImage get okrLogoSmall =>
+      const AssetGenImage('web/assets/okr_logo_small.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [okrLogo];
+  List<AssetGenImage> get values => [okrLogo, okrLogoSmall];
 }
 
 class Assets {

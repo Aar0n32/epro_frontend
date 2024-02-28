@@ -1,3 +1,6 @@
+import 'package:epro_frontend/constants/enums/e_error_codes.dart';
+import 'package:epro_frontend/services/language/i_language_service.dart';
+import 'package:epro_frontend/util/extensions/app_localizations_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -8,12 +11,15 @@ import '../../constants/enums/e_status_variant.dart';
 @Singleton(as: ISnackBarService)
 class SnackBarService extends ISnackBarService with ChangeNotifier {
   final AppStyles _appStyle;
+  final ILanguageService _languageService;
   @override
-  final GlobalKey<ScaffoldMessengerState> messangerKey = GlobalKey<ScaffoldMessengerState>();
+  final GlobalKey<ScaffoldMessengerState> messangerKey =
+      GlobalKey<ScaffoldMessengerState>();
 
-  SnackBarService(this._appStyle);
+  SnackBarService(this._appStyle, this._languageService);
 
-  void showSnackBar({required EStatusVariant statusVariant, required String text}) {
+  void showSnackBar(
+      {required EStatusVariant statusVariant, required String text}) {
     final Color statusColor;
     final Icon statusIcon;
     final Color textColor;
@@ -21,27 +27,35 @@ class SnackBarService extends ISnackBarService with ChangeNotifier {
     switch (statusVariant) {
       case EStatusVariant.success:
         statusColor = _appStyle.colors.successBackground;
-        statusIcon = Icon(Icons.check_circle_outline, color: _appStyle.colors.successForeground);
+        statusIcon = Icon(Icons.check_circle_outline,
+            color: _appStyle.colors.successForeground);
         textColor = _appStyle.colors.successForeground;
         break;
       case EStatusVariant.info:
         statusColor = _appStyle.colors.infoBackground;
-        statusIcon = Icon(Icons.info_outlined, color: _appStyle.colors.infoForeground);
+        statusIcon =
+            Icon(Icons.info_outlined, color: _appStyle.colors.infoForeground);
         textColor = _appStyle.colors.infoForeground;
         break;
       case EStatusVariant.warning:
         statusColor = _appStyle.colors.warningBackground;
-        statusIcon = Icon(Icons.warning_outlined, color: _appStyle.colors.warningForeground);
+        statusIcon = Icon(Icons.warning_outlined,
+            color: _appStyle.colors.warningForeground);
         textColor = _appStyle.colors.warningForeground;
         break;
       case EStatusVariant.error:
       default:
         statusColor = _appStyle.colors.errorBackground;
-        statusIcon = Icon(Icons.error_outline, color: _appStyle.colors.errorForeground);
+        statusIcon =
+            Icon(Icons.error_outline, color: _appStyle.colors.errorForeground);
         textColor = _appStyle.colors.errorForeground;
         break;
     }
-    _showSnackBar(statusColor: statusColor, statusIcon: statusIcon, textColor: textColor, text: text);
+    _showSnackBar(
+        statusColor: statusColor,
+        statusIcon: statusIcon,
+        textColor: textColor,
+        text: text);
   }
 
   @override
@@ -64,8 +78,19 @@ class SnackBarService extends ISnackBarService with ChangeNotifier {
     showSnackBar(statusVariant: EStatusVariant.warning, text: text);
   }
 
+  @override
+  void errorFromCode(ErrorCodes errorCode) {
+    showSnackBar(
+      statusVariant: EStatusVariant.error,
+      text: _languageService.appLocalizations.textFromErrorCode(errorCode),
+    );
+  }
+
   void _showSnackBar(
-      {required Color statusColor, required Icon statusIcon, required Color textColor, required String text}) {
+      {required Color statusColor,
+      required Icon statusIcon,
+      required Color textColor,
+      required String text}) {
     messangerKey.currentState?.showSnackBar(SnackBar(
       backgroundColor: statusColor,
       content: Row(
@@ -80,16 +105,14 @@ class SnackBarService extends ISnackBarService with ChangeNotifier {
             child: Text(
               text,
               textAlign: TextAlign.center,
-              style: _appStyle.currentTheme.textTheme.titleLarge?.copyWith(color: textColor),
+              style: _appStyle.currentTheme.textTheme.titleLarge
+                  ?.copyWith(color: textColor),
               maxLines: 5,
             ),
           ),
         ],
       ),
-      margin: const EdgeInsets.only(
-        bottom: 10,
-          left: 10,
-          right: 10),
+      margin: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
       behavior: SnackBarBehavior.floating,
     ));
   }

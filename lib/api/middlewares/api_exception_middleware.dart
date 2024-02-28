@@ -49,21 +49,23 @@ class ApiExceptionMiddleware extends ILoggable implements IMiddleware {
                 : ErrorCodes.noInternetConnection,
           );
         }
+        if(socketException is ClientException){
+          return OkrApiException(
+            innerException: exception,
+            stackTrace: stackTrace,
+            errorCode: ErrorCodes.noInternetConnection,
+          );
+        }
         return OkrApiException(
           innerException: exception,
           stackTrace: stackTrace,
           errorCode: ErrorCodes.badRequest,
         );
       case 401:
+      case 403:
         return UnauthenticatedUserException(
           innerException: exception,
           stackTrace: stackTrace,
-        );
-      case 403:
-        return OkrApiException(
-          innerException: exception,
-          stackTrace: stackTrace,
-          errorCode: ErrorCodes.forbiddenAction,
         );
       case 500:
         return OkrApiException(

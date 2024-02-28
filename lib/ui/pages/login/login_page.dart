@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../shared/TextInputField.dart';
+import '../../shared/text_input_field.dart';
 import '../../../configs/app_styles.dart';
 import '../../../constants/asset_image_paths.dart';
 import '../../../constants/enums/e_loading_state.dart';
@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                                     .textTheme
                                     .displayMedium
                                     ?.copyWith(
-                                        color: appStyles.colors.textDefault),
+                                        color: appStyles.colors.textOnColor),
                               ),
                       ),
                     ),
